@@ -1,0 +1,16 @@
+[Unit]
+Description=Ruxy Web Service
+After=network.target
+
+[Service]
+Type=simple
+User=root
+RuntimeDirectory=ruxy-web
+Restart=always
+ExecStart=/usr/local/bin/ruxy_web
+EnvironmentFile=/usr/local/etc/ruxy_web.env
+LimitNOFILE=65536
+RuntimeMaxSec=2419200
+
+[Install]
+WantedBy=multi-user.target

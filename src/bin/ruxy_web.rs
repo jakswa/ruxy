@@ -23,7 +23,7 @@ async fn main() -> std::io::Result<()> {
     })
     .workers(10)
     .bind_openssl(
-        format!("127.0.0.1:{}", settings.web_port),
+        format!("0.0.0.0:{}", settings.web_port),
         ssl_builder(settings.ssl_key, settings.ssl_cert),
     )?
     .run()
