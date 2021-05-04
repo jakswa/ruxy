@@ -5,5 +5,5 @@ train_api_key = "SET_ME_IN_ENV"
 
 # to create a self-signed temporary cert for testing:
 # `openssl req -x509 -newkey rsa:4096 -nodes -keyout key.pem -out cert.pem -days 365 -subj '/CN=localhost'`
-ssl_cert = "cert.pem"
-ssl_key = "key.pem"
+ssl_cert = "examples/cert.pem"
+ssl_key = "examples/key.pem"

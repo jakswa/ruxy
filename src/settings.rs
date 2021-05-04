@@ -1,4 +1,5 @@
 extern crate config;
+use config::{Environment, File};
 
 #[derive(serde::Deserialize)]
 pub struct Settings {
@@ -13,10 +14,8 @@ pub struct Settings {
 pub fn build() -> Result<Settings, config::ConfigError> {
     let mut settings = config::Config::default();
     settings
-        .merge(config::File::with_name("Settings"))
-        .unwrap()
-        .merge(config::Environment::with_prefix("APP"))
-        .unwrap();
+        .merge(File::with_name("Settings").required(false))?
+        .merge(Environment::with_prefix("RUXY"))?;
 
     settings.set(
         "train_url",
