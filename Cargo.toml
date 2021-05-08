@@ -17,5 +17,5 @@ env_logger = "*"
 tokio = { version = "*", features = ["sync"] }
 
 [dev-dependencies]
-actix-rt = "2"
+actix-rt = "1"
 tokio = "1"
