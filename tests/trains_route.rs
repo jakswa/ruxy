@@ -1,17 +1,24 @@
-use actix_web::client::Client;
-use std::net::TcpListener;
+use actix_web::http::StatusCode;
+use actix_web::{test, App};
+use ruxy::http_caches::HttpCaches;
+use ruxy::routes::{get_buses, get_trains};
 
+// actually makes an HTTP request to the Settings.toml URL
 #[actix_rt::test]
 async fn trains_route_works() {
-    let base_uri = spawn_server();
-    let uri = format!("{}/trains", base_uri);
-    let resp = Client::default().get(uri).send().await;
+    let mut app =
+        test::init_service(App::new().service(get_trains).data(HttpCaches::default())).await;
+    let req = test::TestRequest::get().uri("/trains").to_request();
+    let resp = test::call_service(&mut app, req).await;
+    assert_eq!(resp.status(), StatusCode::OK);
 }
 
-fn spawn_server() -> String {
-    let listener = TcpListener::bind("127.0.0.1:0").expect("failed to bind to random port");
-    let port = listener.local_addr().unwrap().port();
-    let server = ruxy::server::build_ssl(listener).expect("failed to bind");
-    tokio::spawn(server);
-    format!("https://127.0.0.1:{}", port)
+// actually makes an HTTP request to the Settings.toml URL
+#[actix_rt::test]
+async fn buses_route_works() {
+    let mut app =
+        test::init_service(App::new().service(get_buses).data(HttpCaches::default())).await;
+    let req = test::TestRequest::get().uri("/buses").to_request();
+    let resp = test::call_service(&mut app, req).await;
+    assert_eq!(resp.status(), StatusCode::OK);
 }

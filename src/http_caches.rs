@@ -76,10 +76,30 @@ impl SharedResp {
         }
         let mut cache = rw_resp.write().await;
         // 2nd check. might've raced with other write-wanting requests.
+        // hard to test this, but it ensures no dupe HTTP -- a prime directive.
         if cache.unexpired() {
             return Ok(HttpResponse::build(cache.status).body(cache.body.clone()));
         }
         cache.update().await?;
         Ok(HttpResponse::build(cache.status).body(cache.body.clone()))
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[actix_rt::test]
+    async fn consecutive_requests_work() {
+        let cache = HttpCaches::default();
+        let resp = SharedResp::response_for(&cache.trains)
+            .await
+            .expect("response_for bombed");
+        assert_eq!(resp.status(), StatusCode::OK);
+        assert!(cache.trains.read().await.unexpired());
+        let resp = SharedResp::response_for(&cache.trains)
+            .await
+            .expect("2nd response_for bombed");
+        assert_eq!(resp.status(), StatusCode::OK);
     }
 }
