@@ -1,6 +1,5 @@
-use actix_web::client::Client;
 use actix_web::web::Bytes;
-use actix_web::{http::StatusCode, Error, HttpResponse};
+use actix_web::{http::StatusCode, HttpResponse};
 use std::time::{Duration, Instant};
 use tokio::sync::RwLock;
 
@@ -45,9 +44,9 @@ impl SharedResp {
         self.expiry > Instant::now()
     }
 
-    async fn update(&mut self) -> Result<&SharedResp, Error> {
+    async fn update(&mut self) -> Result<&SharedResp, awc::error::PayloadError> {
         self.expiry = Instant::now() + self.ttl;
-        let resp = Client::default().get(&self.url).send().await;
+        let resp = awc::Client::default().get(&self.url).send().await;
 
         match resp {
             Ok(mut res) => {
@@ -57,7 +56,7 @@ impl SharedResp {
             Err(err) => {
                 self.body = Bytes::from(format!("received {}", err));
                 self.status = match err {
-                    actix_web::client::SendRequestError::Timeout => StatusCode::REQUEST_TIMEOUT,
+                    awc::error::SendRequestError::Timeout => StatusCode::REQUEST_TIMEOUT,
                     _ => StatusCode::BAD_GATEWAY,
                 }
             }
@@ -67,7 +66,9 @@ impl SharedResp {
 
     // Multiple threads fight to safely read/write these cached HTTP responses.
     // An alternative was Mutex, but RwLock is hoping for read-heavy API usage.
-    pub async fn response_for(rw_resp: &RwLock<SharedResp>) -> Result<HttpResponse, Error> {
+    pub async fn response_for(
+        rw_resp: &RwLock<SharedResp>,
+    ) -> Result<HttpResponse, awc::error::PayloadError> {
         {
             let cache = rw_resp.read().await;
             if cache.unexpired() {

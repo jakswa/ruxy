@@ -2,6 +2,7 @@ web_port = 8080
 bus_url = "https://httpbin.org/get"
 train_base_url = "https://httpbin.org/get"
 train_api_key = "SET_ME_IN_ENV"
+gtfs_zip_url = "https://www.itsmarta.com/google_transit_feed/google_transit.zip"
 
 # to create a self-signed temporary cert for testing:
 # `openssl req -x509 -newkey rsa:4096 -nodes -keyout key.pem -out cert.pem -days 365 -subj '/CN=localhost'`
