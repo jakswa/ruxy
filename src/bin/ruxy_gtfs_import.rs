@@ -77,7 +77,7 @@ async fn main() {
             let cdate: CalendarDate = result.unwrap();
             insert_cdate(&mut conn, cdate).await;
         }
-        sqlx::query!("COMMIT").execute(&mut conn).await.unwrap();
+        sqlx::query("COMMIT").execute(&mut conn).await.unwrap();
     }
     {
         let calendar = archive.by_name(&"calendar.txt").unwrap();
@@ -87,7 +87,7 @@ async fn main() {
             let cal: Calendar = result.unwrap();
             insert_calendar(&mut conn, cal).await;
         }
-        sqlx::query!("COMMIT").execute(&mut conn).await.unwrap();
+        sqlx::query("COMMIT").execute(&mut conn).await.unwrap();
     }
     {
         let routes = archive.by_name(&"routes.txt").unwrap();
@@ -97,7 +97,7 @@ async fn main() {
             let route: Route = result.unwrap();
             insert_route(&mut conn, route).await;
         }
-        sqlx::query!("COMMIT").execute(&mut conn).await.unwrap();
+        sqlx::query("COMMIT").execute(&mut conn).await.unwrap();
     }
     {
         let trips = archive.by_name(&"trips.txt").unwrap();
@@ -107,7 +107,7 @@ async fn main() {
             let trip: Trip = result.unwrap();
             insert_trip(&mut conn, trip).await;
         }
-        sqlx::query!("COMMIT").execute(&mut conn).await.unwrap();
+        sqlx::query("COMMIT").execute(&mut conn).await.unwrap();
     }
     {
         let stop_times = archive.by_name(&"stop_times.txt").unwrap();
@@ -117,7 +117,7 @@ async fn main() {
             let stop_time: StopTime = result.unwrap();
             insert_stop_time(&mut conn, stop_time).await;
         }
-        sqlx::query!("COMMIT").execute(&mut conn).await.unwrap();
+        sqlx::query("COMMIT").execute(&mut conn).await.unwrap();
     }
     {
         let stops = archive.by_name(&"stops.txt").unwrap();
@@ -127,7 +127,7 @@ async fn main() {
             let stop: Stop = result.unwrap();
             insert_stop(&mut conn, stop).await;
         }
-        sqlx::query!("COMMIT").execute(&mut conn).await.unwrap();
+        sqlx::query("COMMIT").execute(&mut conn).await.unwrap();
     }
 
     println!("done!");
@@ -215,5 +215,3 @@ async fn gtfs_zip_file(url: &str) -> Result<std::fs::File, std::io::Error> {
     println!("got it.");
     Ok(file)
 }
-
-

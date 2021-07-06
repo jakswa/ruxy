@@ -27,7 +27,8 @@ features = [
     "runtime-actix-rustls",
     "macros",
     "sqlite",
-    "migrate"
+    "migrate",
+    "offline"
 ]
 
 [dev-dependencies]

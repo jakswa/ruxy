@@ -1,0 +1,63 @@
+{
+  "db": "SQLite",
+  "4bbd496e657fe41b9858e684ef1b67aa605ff1b13606b4234eb1685d0b300fe6": {
+    "query": "INSERT INTO trips (trip_id, direction_id, block_id, shape_id, route_id, service_id) VALUES (?, ?, ?, ?, ?, ?)",
+    "describe": {
+      "columns": [],
+      "parameters": {
+        "Right": 6
+      },
+      "nullable": []
+    }
+  },
+  "5957659af53e9a7fcdd04cd9fb617fed8be8b95a5246ba1d2b2309636ee0df2a": {
+    "query": "INSERT INTO calendar (service_id, monday, tuesday, wednesday, thursday, friday, saturday, sunday, start_date, end_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+    "describe": {
+      "columns": [],
+      "parameters": {
+        "Right": 10
+      },
+      "nullable": []
+    }
+  },
+  "74053ffa489be05e6c40ddfefe46b80f2498378d4cb7c30424981c79a213f290": {
+    "query": "INSERT INTO stop_times (trip_id, arrival_time, departure_time, stop_id, stop_sequence) VALUES (?, ?, ?, ?, ?)",
+    "describe": {
+      "columns": [],
+      "parameters": {
+        "Right": 5
+      },
+      "nullable": []
+    }
+  },
+  "a5b3355eaaf746afb47f7b1362d029a6739a3885cf3b8bdaa5f2d2f14bd8dc39": {
+    "query": "INSERT INTO stops (stop_id, stop_code, stop_name, stop_lat, stop_lon) VALUES (?, ?, ?, ?, ?)",
+    "describe": {
+      "columns": [],
+      "parameters": {
+        "Right": 5
+      },
+      "nullable": []
+    }
+  },
+  "a5ca48fbbf1016d552bd9a7e70968b1ab27ae8d7bdfdb48bad51de82e5d6ef01": {
+    "query": "INSERT INTO calendar_dates (service_id, date, exception_type) VALUES (?, ?, ?)",
+    "describe": {
+      "columns": [],
+      "parameters": {
+        "Right": 3
+      },
+      "nullable": []
+    }
+  },
+  "b41b30a8a0ea11b8e32a5fb59dabb96bc99f16a7b21e9a9be4e23783db60ec23": {
+    "query": "INSERT INTO routes (route_id, route_short_name, route_long_name, route_desc, route_type, route_url, route_text_color) VALUES (?, ?, ?, ?, ?, ?, ?)",
+    "describe": {
+      "columns": [],
+      "parameters": {
+        "Right": 7
+      },
+      "nullable": []
+    }
+  }
+}
